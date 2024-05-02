@@ -14,6 +14,13 @@ def calcular_rmse(y_real, y_pred):
 # Tambien se puede trabajar con numpy(es mas eficiente computacionalmente)
     return rmse
 
+def calcular_mae(y_real, y_pred):
+    # y_real y y_pred son listas
+    n = len(y_real)
+    mae = sum(abs(y_real[i] - y_pred[i]) for i in range(n)) / n
+    return mae
+
+
 # Se carga el conjunto de datos de precios de casas en California
 californiaCasas = fetch_openml(name="house_prices", as_frame=True)
 
@@ -46,6 +53,10 @@ Y_pred_multiple = lr_multiple.predict(X_test)
 # Calculamos el error cuadrático medio
 rmse = calcular_rmse(y_test.values, Y_pred_multiple)
 print("Raiz cuadrada del error cuadrático medio:", rmse)
+
+# Calculamos el error cuadrático medio absoluto
+mae = calcular_mae(y_test.values, Y_pred_multiple)
+print("Error cuadrático medio absoluto:", mae)
 
 # Calculamos el coeficiente de determinación (R^2)
 r2 = lr_multiple.score(X_test, y_test)
